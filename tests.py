@@ -17,13 +17,18 @@ class PartyTests(unittest.TestCase):
         """Can we reach the homepage?"""
 
         result = self.client.get("/")
-        self.assertIn(b"having a party", result.data)
+        self.assertIn(b"Please RSVP", result.data)
 
     def test_no_rsvp_yet(self):
         """Do users who haven't RSVPed see the correct view?"""
 
+        result = self.client.get("/")
+        self.assertIn(b"Please RSVP", result.data, "Test Passed!")
+        result = self.client.get("/")
+        self.assertNotIn(b"Party Details", result.data)
+
         # FIXME: Add a test to show we haven't RSVP'd yet
-        print("FIXME")
+        # print("FIXME")
 
     def test_rsvp(self):
         """Do RSVPed users see the correct view?"""
